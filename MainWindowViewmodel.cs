@@ -24,8 +24,17 @@ namespace CodeFirstEF
             Refresh.Execute(1);
         }
         public ObservableCollection<Note> Notes { get; set; } = new ObservableCollection<Note>();
-        public ChangingItem<int> selected { get; set; } = new ChangingItem<int>();
-        public Note SelectedNote => Notes[selected.Item];
+        public Note selected
+        {
+            get=> s;
+            set 
+            {
+                s = value;
+                OnPropertyChanged(nameof(selected));
+            }
+        }
+
+            Note s;
         public ICommand Add => new RelayCommand(o =>
         {
             using (var ctx = new CodeFirstEFContext())
@@ -33,26 +42,28 @@ namespace CodeFirstEF
                 NoteEdit win = new NoteEdit(new Note());
                 if (win.ShowDialog() != null)
                 {
-                    if (win.Note != new Note())
+                    if (win.Note != null)
                     {
                         var note = win.Note;
                         note.category = ctx.Categories.First(o => o.Id == win.Note.category.Id);
                         ctx.Notes.Add(note);                        
                         ctx.SaveChanges();
                         Refresh.Execute(1);
+                        OnPropertyChanged(nameof(Notes));
                     }
                 }
             }
+            
         });
         public ICommand Delete => new RelayCommand(o =>
         {
             using (var ctx = new CodeFirstEFContext())
             {
-                ctx.Notes.Remove(ctx.Notes.First(o => o.Id == SelectedNote.Id));
+                ctx.Notes.Remove(ctx.Notes.First(o => o.Id ==  selected.Id));
                 ctx.SaveChanges();
                 Refresh.Execute(1);
-            } 
-        });
+            }
+        }, o=> selected!=null);
         public ICommand Refresh => new RelayCommand(o =>
         {
             var list = new List<Note>();

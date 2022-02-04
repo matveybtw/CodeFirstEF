@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <DataGrid SelectedIndex="{Binding selected.Item}" SelectionUnit="FullRow" ItemsSource="{Binding Notes}" Margin="10,10,225,65" AutoGenerateColumns="false" CanUserDeleteRows="False" CanUserAddRows="False" >
+        <DataGrid SelectedItem="{Binding selected}" SelectionUnit="FullRow" ItemsSource="{Binding Notes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,10,54,64" AutoGenerateColumns="false" CanUserDeleteRows="False" CanUserAddRows="False" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Path=Id}"/>
                 <DataGridTextColumn Header="Title" Binding="{Binding Path=Title}"/>
@@ -15,9 +15,13 @@
                 <DataGridTextColumn Header="Summ" Binding="{Binding Path=Summ}"/>
                 <DataGridTextColumn Header="Category" Binding="{Binding Path=category.Type}"/>
             </DataGrid.Columns>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Refresh" Command="{Binding Refresh}"></MenuItem>
+                    <MenuItem Header="Add" Command="{Binding Add}"></MenuItem>
+                    <MenuItem Header="Delete" Command="{Binding Delete}"></MenuItem>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
         </DataGrid>
-        <Button Command="{Binding Refresh}" Content="Обновить" Margin="624,30,69,345"></Button>
-        <Button Command="{Binding Add}" Content="Добавить" Margin="624,94,69,280"/>
-        <Button Command="{Binding Delete}" Content="Удалить" Margin="624,156,69,220"/>
     </Grid>
 </Window>

@@ -67,7 +67,7 @@ namespace CodeFirstEF
         });
         public ICommand Cancel => new RelayCommand(o =>
         {
-            window.Close(note); 
+            window.Close(null);
         });
     }
 }
