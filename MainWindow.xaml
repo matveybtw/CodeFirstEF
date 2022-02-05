@@ -9,7 +9,7 @@
     <Grid>
         <DataGrid SelectedItem="{Binding selected}" SelectionUnit="FullRow" ItemsSource="{Binding Notes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,10,54,64" AutoGenerateColumns="false" CanUserDeleteRows="False" CanUserAddRows="False" >
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Id" Binding="{Binding Path=Id}"/>
+                <DataGridTextColumn  Header="Id" Binding="{Binding Path=Id}"/>
                 <DataGridTextColumn Header="Title" Binding="{Binding Path=Title}"/>
                 <DataGridTextColumn Header="Date" Binding="{Binding Path=Date}"/>
                 <DataGridTextColumn Header="Summ" Binding="{Binding Path=Summ}"/>
@@ -22,6 +22,19 @@
                     <MenuItem Header="Delete" Command="{Binding Delete}"></MenuItem>
                 </ContextMenu>
             </DataGrid.ContextMenu>
+            <DataGrid.CellStyle >
+                <Style TargetType="DataGridCell">
+                    <Style.Triggers>
+                        <Trigger Property="IsEnabled" Value="True">
+                            <Setter  Property="Background">
+                                <Setter.Value>
+                                    <SolidColorBrush  Color="{Binding Path=category, Converter={StaticResource CategoryToColor}"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.CellStyle>
         </DataGrid>
     </Grid>
 </Window>

@@ -20,7 +20,7 @@ namespace CodeFirstEF
     /// </summary>
     public partial class NoteEdit : Window
     {
-        public Note Note { get; set; } = new Note();
+        public Note Note { get; set; } = new Note();    
         public NoteEdit(Note n)
         {
             InitializeComponent();
@@ -31,5 +31,6 @@ namespace CodeFirstEF
             Note = note;
             Close();
         }
+        
     }
 }
