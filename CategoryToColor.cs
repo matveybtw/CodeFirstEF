@@ -27,7 +27,21 @@ namespace CodeFirstEF
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return new Category { Id = 1, Type = "Rate" };
+            var c = value as Color;
+            if (c==Color.Red)
+            {
+                using (var ctx = new CodeFirstEFContext())
+                {
+                    return ctx.Categories.First(o => o.Id == 2);
+                }
+            }
+            else
+            {
+                using (var ctx = new CodeFirstEFContext())
+                {
+                    return ctx.Categories.First(o => o.Id == 1);
+                }
+            }
         }
     }
 }
